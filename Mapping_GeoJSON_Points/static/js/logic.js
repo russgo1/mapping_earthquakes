@@ -1,3 +1,7 @@
+/*
+REVERTED HERE TO SIMPLE_MAP VERSION OF FILES TO CLEAR SCRIPT FROM OTHER MODULES
+*/
+
 // 14.2.4
 
 // console.log to check code
