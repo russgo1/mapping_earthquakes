@@ -8,7 +8,7 @@ REVERTED HERE TO SIMPLE_MAP VERSION OF FILES TO CLEAR SCRIPT FROM OTHER MODULES
 console.log("logic working");
 
 // create map object
-let map = L.map('mapid').setView([37.5, -122.5], 10); // number is zoom level (scale 0-18)
+let map = L.map('mapid').setView([30, 30], 2); // number is zoom level (scale 0-18)
 // Alternative:
 // This method is useful when we need to add multiple tile layers, or a background image of our map(s), which we will do later in this module.
 //let map = L.map("mapid", {
@@ -52,6 +52,8 @@ L.geoJSON(sanFranAirport, {
 }).addTo(map);
 */
 
+/* Using onEachFeature
+
 L.geoJSON(sanFranAirport, {
   onEachFeature: function(feature, layer) {
     console.log(layer);
@@ -59,6 +61,7 @@ L.geoJSON(sanFranAirport, {
     <h4>Airport name: ${layer.feature.properties.name}`);
   }
 }).addTo(map);
+*/
 
 // create tile layer
 
@@ -71,3 +74,21 @@ let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z
 });
 // Then we add our 'graymap' tile layer to the map.
 streets.addTo(map); // reference map defined above
+
+// 14.5.3
+// Load in large data file AFTER creating tile layer to enusre loading the map doesn't get held up
+let airportData = "https://raw.githubusercontent.com/russgo1/mapping_earthquakes/Mapping_Single_Points/majorAirports.json"
+
+// When loading json from an external source, we have to use the d3 promise thing:
+
+d3.json(airportData).then(function(data) {
+  console.log(data);
+  // Create GeoJSON layer with data
+  L.geoJSON(data, {
+    pointToLayer: function(feature, latlng) {
+      return L.marker(latlng).bindPopup(`<h3>Airport code: ${feature.properties.faa}</h3><hr>
+      <h4>Airport name: ${feature.properties.name}`);
+    }
+  }).addTo(map);
+});
+
