@@ -4,7 +4,7 @@
 console.log("logic working");
 
 // create map object
-let map = L.map('mapid').setView([34.0522, -118.2437], 4); // 14 is zoom level (scale 0-18)
+let map = L.map('mapid').setView([37.6214, -122.3790], 5); // last number is zoom level (scale 0-18)
 // Alternative:
 // This method is useful when we need to add multiple tile layers, or a background image of our map(s), which we will do later in this module.
 //let map = L.map("mapid", {
@@ -55,13 +55,26 @@ cityData.forEach(function(city) {
   .addTo(map)
 });
 
+// 14.4.3
+let line = [
+  [33.9416, -118.4085],
+  [37.6214, -122.3790],
+  [40.7899, -111.9791],
+  [47.4502, -122.3088]
+];
+
+// create the line
+L.polyline(line, {
+  color: "yellow"
+}).addTo(map);
+
 // create tile layer
 // We create the tile layer that will be the background of our map.
 let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
     accessToken: API_KEY,
-    id: "dark-v10"
+    id: "satellite-streets-v11"
 });
 // Then we add our 'graymap' tile layer to the map.
 streets.addTo(map); // reference map defined above
