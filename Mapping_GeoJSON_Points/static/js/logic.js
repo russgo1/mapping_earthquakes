@@ -7,8 +7,7 @@ REVERTED HERE TO SIMPLE_MAP VERSION OF FILES TO CLEAR SCRIPT FROM OTHER MODULES
 // console.log to check code
 console.log("logic working");
 
-// create map object
-let map = L.map('mapid').setView([30, 30], 2); // number is zoom level (scale 0-18)
+
 // Alternative:
 // This method is useful when we need to add multiple tile layers, or a background image of our map(s), which we will do later in this module.
 //let map = L.map("mapid", {
@@ -73,7 +72,31 @@ let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z
     id: "outdoors-v12"
 });
 // Then we add our 'graymap' tile layer to the map.
-streets.addTo(map); // reference map defined above
+//streets.addTo(map); // reference map defined above //comented out for multi-layer
+
+// 14.5.4
+// We create the dark view tile layer that will be an option for our map.
+let dark = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    accessToken: API_KEY
+});
+
+// Create a base layer for both maps
+let baseMaps = {
+  Street: streets,
+  Dark: dark
+};
+
+// moved to after creation of baseMaps in 14.5.4
+// create map object
+let map = L.map('mapid', {
+  center: [40.7, -94.5],
+  zoom: 4,
+  layers: [streets]
+});
+
+L.control.layers(baseMaps).addTo(map);
 
 // 14.5.3
 // Load in large data file AFTER creating tile layer to enusre loading the map doesn't get held up
