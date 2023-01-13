@@ -106,20 +106,14 @@ let torontoHoods = "https://raw.githubusercontent.com/russgo1/mapping_earthquake
 // When loading json from an external source, we have to use the d3 promise thing:
 
 // 14.5.5
-let myStyle = {
-  color: "#ffffa1",
-  weight: 2
-};
+// let myStyle = {
+//   color: "#ffffa1",
+//   weight: 2
+// };
 
-d3.json(torontoData).then(function(data) {
+d3.json(torontoHoods).then(function(data) {
   console.log(data);
   // Create GeoJSON layer with data
-  L.geoJSON(data, {
-    style: myStyle,
-    onEachFeature: function(feature, layer) {
-      layer.bindPopup(`<h3>Airline: ${feature.properties.airline}</h3><hr>
-      <h3>Destination: ${feature.properties.dst}</h3>`)
-    }
-  }).addTo(map);
+  L.geoJSON(data).addTo(map);
 });
 
