@@ -27,3 +27,8 @@ let map = L.map("mapid", {
 });
 
 L.control.layers(baseMaps).addTo(map);
+
+// Retrieve earthquake geoJSON
+d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson").then(function(data) {
+    L.geoJSON(data).addTo(map);
+});
