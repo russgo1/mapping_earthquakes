@@ -31,12 +31,15 @@ L.control.layers(baseMaps).addTo(map);
 // Retrieve earthquake geoJSON
 d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson").then(function(data) {
     L.geoJSON(data, {
+        // create marker on layer
         pointToLayer: function(feature, latlng) {
             console.log(data);
             return L.circleMarker(latlng);
         },
+    // function to stylize L.geoJSON
     style: styleInfo
     }).addTo(map);
+    // function to define parameters of style function - returns object
     function styleInfo(feature) {
         return {
             opacity: 1,
@@ -48,6 +51,7 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
             weight: 0.5
         };
     };
+    // function to define radius value in styleInfo function
     function getRadius(magnitude) {
         if (magnitude === 0) {
             return 1;
