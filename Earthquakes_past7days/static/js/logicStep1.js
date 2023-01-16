@@ -1,4 +1,4 @@
-console.log("logic working");
+console.log("logicStep1 working");
 
 
 let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
