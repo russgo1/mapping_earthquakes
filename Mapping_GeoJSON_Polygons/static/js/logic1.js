@@ -6,6 +6,8 @@ REVERTED HERE TO SIMPLE_MAP VERSION OF FILES TO CLEAR SCRIPT FROM OTHER MODULES
 
 // console.log to check code
 console.log("logic working");
+console.log("printing from Polygons")
+console.log(ping)
 
 
 // Alternative:
@@ -19,25 +21,6 @@ console.log("logic working");
 
 // 14.5.2
 // Add a geojson layer
-
-let sanFranAirport =
-{"type":"FeatureCollection","features":[{ // This is where the "feature" starts
-    "type":"Feature",
-    "properties":{
-        "id":"3469",
-        "name":"San Francisco International Airport",
-        "city":"San Francisco",
-        "country":"United States",
-        "faa":"SFO",
-        "icao":"KSFO",
-        "alt":"14",
-        "tz-offset":"-8",
-        "dst":"A",
-        "tz":"America/Los_Angeles"},
-        "geometry":{
-            "type":"Point",
-            "coordinates":[-122.375,37.61899948120117]}} // lat and lon reversed so longitude can be X-axis and longitude Y-Axis
-]};
 
 /* pointToLayer
 
@@ -76,17 +59,17 @@ let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z
 
 // 14.5.4
 // We create the dark view tile layer that will be an option for our map.
-let satalliteStreets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+let satelliteStreets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
 attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
     accessToken: API_KEY,
-    id: "satallite-streets-v11"
+    id: "satellite-streets-v11"
 });
 
 // Create a base layer for both maps
 let baseMaps = {
   "Streets": streets,
-  "Satellite Streets": satalliteStreets
+  "Satellite Streets": satelliteStreets
 };
 
 // moved to after creation of baseMaps in 14.5.4
@@ -94,7 +77,7 @@ let baseMaps = {
 let map = L.map('mapid', {
   center: [43.7, -79.3],
   zoom: 2,
-  layers: [satalliteStreets]
+  layers: [satelliteStreets]
 });
 
 L.control.layers(baseMaps).addTo(map);
@@ -113,7 +96,6 @@ let torontoHoods = "https://raw.githubusercontent.com/russgo1/mapping_earthquake
 
 d3.json(torontoHoods).then(function(data) {
   console.log(data);
-  // Create GeoJSON layer with data
   L.geoJSON(data).addTo(map);
 });
 
