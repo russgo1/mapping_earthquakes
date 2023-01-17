@@ -54,6 +54,38 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
     }).addTo(earthquakesLayer);
     // then, inside the d3.json function and outside the geoJSON function, add the earthquakesLayer to the map
     earthquakesLayer.addTo(map);
+
+    // Add legend
+    let legend = L.control({
+        position: 'bottomright'
+    });
+
+    legend.onAdd = function() {
+
+        let div = L.DomUtil.create('div', 'info legend');
+
+        const magnitudes = [0, 1, 2, 3, 4, 5];
+        const colors = [
+            "#98ee00",
+            "#d4ee00",
+            "#eecc00",
+            "#ee9c00",
+            "#ea822c",
+            "#ea2c2c"
+          ];
+
+        // loop through our density intervals and generate a label with a colored square for each interval
+        for (var i = 0; i < magnitudes.length; i++) {
+            div.innerHTML +=
+                '<i style="background:' + colors[i] + '"></i> ' +
+                magnitudes[i] + (magnitudes[i + 1] ? '&ndash;' + magnitudes[i + 1] + '<br>' : '+');
+    }
+
+    return div;
+    };
+
+    legend.addTo(map);
+
     // function to define parameters of style function - returns object
     function styleInfo(feature) {
         return {
